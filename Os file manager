@@ -11,12 +11,82 @@ def cur_dir():
 def change_dir(command):
     try:
         os.chdir(command)
-        print((os.getcwd()))
+        print(os.getcwd())
     except FileNotFoundError:
         print("No such directory")
 
+
+def ls():
+    folders = []
+    files = []
+
+    for item in os.listdir("."):
+        fullpath = os.path.join(".", item)
+        if os.path.isdir(fullpath):
+            folders.append(item)
+        else:
+            files.append(item)
+
+    for folder in folders:
+        print(folder)
+    for file in files:
+        print(file)
+
+
+def lsl():
+    folders = []
+    files = []
+
+    for item in os.listdir("."):
+        fullpath = os.path.join(".", item)
+        if os.path.isdir(fullpath):
+            folders.append(item)
+        else:
+            files.append(item)
+
+    for folder in folders:
+        print(folder)
+
+    for file in files:
+        fullpath = os.path.join(".", file)
+        size = os.path.getsize(fullpath)
+        print(f"{file} {size} ")
+
+
+def lslh():
+    folders = []
+    files = []
+
+    for item in os.listdir("."):
+        fullpath = os.path.join(".", item)
+        if os.path.isdir(fullpath):
+            folders.append(item)
+        else:
+            files.append(item)
+
+    for folder in folders:
+        print(folder)
+
+    for file in files:
+        fullpath = os.path.join(".", file)
+        size = os.path.getsize(fullpath)
+
+        if size < 1024:
+            final_size = str(size) + "B"
+        elif 1024 <= size < (1024 ** 2):
+            final_size = str(round(size / 1024)) + "KB"
+        elif (1024 ** 2) <= size < (1024 ** 3):
+            final_size = str(round(size / (1024 ** 2))) + "MB"
+        elif (1024 ** 3) <= size < (1024 ** 4):
+            final_size = str(round(size / (1024 ** 3))) + "GB"
+        else:
+            final_size = str(size) + "B"
+
+        print(f"{file} {final_size} ")
+
+print("Input the command")
 while True:
-    user_input = input("Input the command: ")
+    user_input = input()
 
     if user_input == "pwd":
         cur_dir()
@@ -24,7 +94,15 @@ while True:
     elif user_input.startswith("cd "):
         change_dir(user_input.split()[1])
 
+    elif user_input == "ls":
+        ls()
+
+    elif user_input == "ls -l":
+        lsl()
+
+    elif user_input == "ls -lh":
+        lslh()
+
     else:
         print("Invalid command")
-
 
