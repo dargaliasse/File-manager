@@ -1,0 +1,30 @@
+import os
+
+os.chdir('module/root_folder')
+
+
+def cur_dir():
+    command = os.getcwd()
+    print(command)
+
+
+def change_dir(command):
+    try:
+        os.chdir(command)
+        print((os.getcwd()))
+    except FileNotFoundError:
+        print("No such directory")
+
+while True:
+    user_input = input("Input the command: ")
+
+    if user_input == "pwd":
+        cur_dir()
+
+    elif user_input.startswith("cd "):
+        change_dir(user_input.split()[1])
+
+    else:
+        print("Invalid command")
+
+
